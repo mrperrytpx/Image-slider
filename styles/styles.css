@@ -17,6 +17,8 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-transform: translateX(-50vw);
+          transform: translateX(-50vw);
 }
 
 .image-holder .image-slide img {

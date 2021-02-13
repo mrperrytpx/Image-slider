@@ -1,25 +1,35 @@
 const imageSlider = document.querySelector(".image-slide");
 const prevBtn = document.querySelector(".prevBtn");
 const nextBtn = document.querySelector(".nextBtn");
+const allImages = document.querySelectorAll("img");
 
-let translateX = 0;
+let multiplier = 1;
 
 nextBtn.addEventListener("click", (e) => {
-    if (translateX === -150) {
-        translateX = 0;
-        imageSlider.style.transform = null;
-    } else {
-        translateX -= 50;
-        imageSlider.style.transform=`translateX(${translateX}vw)`;
-    }
+    if (multiplier >= allImages.length - 1) return;
+    imageSlider.style.transition = "transform 0.5s ease";
+    multiplier++;
+    imageSlider.style.transform = `translateX(${-50 * multiplier}vw)`;
 });
 
 prevBtn.addEventListener("click", (e) => {
-    if (translateX === 0) {
-        translateX = -150;
-        imageSlider.style.transform = `translateX(${translateX}vw)`;
-    } else {
-        translateX += 50;
-        imageSlider.style.transform = `translateX(${translateX}vw)`;
+    if (multiplier <= 0) return;
+    imageSlider.style.transition = "transform 0.5s ease";
+    multiplier--;
+    imageSlider.style.transform = `translateX(${-50 * multiplier}vw)`;
+});
+
+imageSlider.addEventListener("transitionend", () => {
+    if (multiplier === allImages.length - 1) {
+        imageSlider.style.transition = null;
+        multiplier = 1;
+        console.log("back");
+        imageSlider.style.transform = `translateX(${-50 * multiplier}vw)`;
+    }
+    if (multiplier === 0) {
+        imageSlider.style.transition = null;
+        multiplier = 4;
+        console.log("front");
+        imageSlider.style.transform = `translateX(${-50 * multiplier}vw)`;
     }
 });
